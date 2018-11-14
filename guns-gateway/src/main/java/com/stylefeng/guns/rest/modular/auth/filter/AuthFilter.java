@@ -35,10 +35,24 @@ public class AuthFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+        // 屏蔽 /auth 开头的请求，不走 jwt 验证
         if (request.getServletPath().equals("/" + jwtProperties.getAuthPath())) {
             chain.doFilter(request, response);
             return;
         }
+
+        // 配置 忽略列表
+        String ignoreUrl = jwtProperties.getIgnoreUrl();
+        String[] ignoreUrls = ignoreUrl.split(",");
+        for (int i = 0; i < ignoreUrls.length; i++) {
+            // 如果匹配得到 则不走 jwt 验证
+            if (request.getServletPath().equals(ignoreUrls[i])) {
+                chain.doFilter(request, response);
+                return;
+            }
+        }
+
+
         final String requestHeader = request.getHeader(jwtProperties.getHeader());
         String authToken = null;
         if (requestHeader != null && requestHeader.startsWith("Bearer ")) {

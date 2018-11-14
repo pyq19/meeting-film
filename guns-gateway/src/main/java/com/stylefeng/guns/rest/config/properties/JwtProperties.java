@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ConfigurationProperties(prefix = JwtProperties.JWT_PREFIX)
+// resources/application.yml 中，以 jwt 开头的配置都读进来
 public class JwtProperties {
 
     public static final String JWT_PREFIX = "jwt";
@@ -24,6 +25,16 @@ public class JwtProperties {
     private String authPath = "auth";
 
     private String md5Key = "randomKey";
+
+    private String ignoreUrl = "";
+
+    public String getIgnoreUrl() {
+        return ignoreUrl;
+    }
+
+    public void setIgnoreUrl(String ignoreUrl) {
+        this.ignoreUrl = ignoreUrl;
+    }
 
     public static String getJwtPrefix() {
         return JWT_PREFIX;
