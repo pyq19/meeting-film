@@ -2,7 +2,7 @@ package com.stylefeng.guns.api.user;
 
 public interface UserAPI {
 
-    boolean login(String username, String password);
+    int login(String username, String password);    // 用 int 原因是要把登录后的用户 id 存在 ThreadLocal
 
     boolean register(UserModel userModel);
 
