@@ -11,6 +11,8 @@ import com.stylefeng.guns.rest.common.persistence.model.MoocUserT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.sql.Date;
+
 @Component
 @Service(interfaceClass = UserAPI.class)
 public class UserServiceImpl implements UserAPI {
@@ -67,14 +69,14 @@ public class UserServiceImpl implements UserAPI {
 
     private UserInfoModel dataObjectToUserInfo(MoocUserT moocUserT) {
         UserInfoModel userInfoModel = new UserInfoModel();
-//        userInfoModel.setUuid(moocUserT.getUuid());
+        userInfoModel.setUuid(moocUserT.getUuid());
         userInfoModel.setHeadAddress(moocUserT.getHeadUrl());
         userInfoModel.setPhone(moocUserT.getUserPhone());
         userInfoModel.setUpdateTime(moocUserT.getUpdateTime().getTime());
         userInfoModel.setEmail(moocUserT.getEmail());
         userInfoModel.setUsername(moocUserT.getUserName());
         userInfoModel.setNickname(moocUserT.getNickName());
-        userInfoModel.setLifeState(""+moocUserT.getLifeState());
+        userInfoModel.setLifeState("" + moocUserT.getLifeState());
         userInfoModel.setBirthday(moocUserT.getBirthday());
         userInfoModel.setAddress(moocUserT.getAddress());
         userInfoModel.setSex(moocUserT.getUserSex());
@@ -92,9 +94,38 @@ public class UserServiceImpl implements UserAPI {
         // 返回 UserInfoModel
         return userInfoModel;
     }
-    
+
+    // 用 sql date
+    private Date timeToDate(long time) {
+        Date date = new Date(time);
+        return date;
+    }
+
     @Override
     public UserInfoModel updateUserInfo(UserInfoModel userInfoModel) {
-        return null;
+        // 将传入的信息转换为 MoocUserT
+        MoocUserT moocUserT = new MoocUserT();
+        moocUserT.setUuid(userInfoModel.getUuid());
+        moocUserT.setNickName(userInfoModel.getNickname());
+        moocUserT.setLifeState(Integer.parseInt(userInfoModel.getLifeState()));
+        moocUserT.setBirthday(userInfoModel.getBirthday());
+        moocUserT.setBiography(userInfoModel.getBiography());
+        moocUserT.setBeginTime(null);
+        moocUserT.setHeadUrl(userInfoModel.getHeadAddress());
+        moocUserT.setEmail(userInfoModel.getEmail());
+        moocUserT.setAddress(userInfoModel.getAddress());
+        moocUserT.setUserPhone(userInfoModel.getPhone());
+        moocUserT.setUserSex(userInfoModel.getSex());
+        moocUserT.setUpdateTime(null);
+
+        // 将数据保存
+        Integer isSuccess = moocUserTMapper.updateById(moocUserT);
+        if (isSuccess > 0) {
+            // 按照 Id 把用户信息取出
+            UserInfoModel result = getUserInfo(moocUserT.getUuid());
+            return result;
+        }
+        // 如果没成功 就把原来的参数传回去
+        return userInfoModel;
     }
 }

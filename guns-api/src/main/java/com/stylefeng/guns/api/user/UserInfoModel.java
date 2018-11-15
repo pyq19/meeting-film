@@ -4,6 +4,7 @@ package com.stylefeng.guns.api.user;
 // 查询用户信息用的 VO
 // 把敏感信息排除 进行业务操作
 public class UserInfoModel {
+    private Integer uuid;
     private String username;    // 用户名
     private String nickname;    // 昵称
     private String email;       // 邮箱
@@ -16,6 +17,14 @@ public class UserInfoModel {
     private String headAddress; // 头像地址
     private long beginTime;    // timestamp
     private long updateTime;    // timestamp
+
+    public Integer getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(Integer uuid) {
+        this.uuid = uuid;
+    }
 
     public String getUsername() {
         return username;
