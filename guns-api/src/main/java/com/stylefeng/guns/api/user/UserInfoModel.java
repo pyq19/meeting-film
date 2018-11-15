@@ -14,7 +14,7 @@ public class UserInfoModel {
     private String biography;   // 简介
     private String address;     // 地址
     private String headAddress; // 头像地址
-    private long createTime;    // timestamp
+    private long beginTime;    // timestamp
     private long updateTime;    // timestamp
 
     public String getUsername() {
@@ -97,19 +97,19 @@ public class UserInfoModel {
         this.headAddress = headAddress;
     }
 
-    public long getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(long createTime) {
-        this.createTime = createTime;
-    }
-
     public long getUpdateTime() {
         return updateTime;
     }
 
     public void setUpdateTime(long updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public long getBeginTime() {
+        return beginTime;
+    }
+
+    public void setBeginTime(long beginTime) {
+        this.beginTime = beginTime;
     }
 }
