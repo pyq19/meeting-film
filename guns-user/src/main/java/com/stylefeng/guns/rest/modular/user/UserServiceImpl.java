@@ -56,15 +56,16 @@ public class UserServiceImpl implements UserAPI {
         return 0;
     }
 
+    // 检测用户名是否存在，存在则返回 true
     @Override
     public boolean checkUsername(String username) {
         EntityWrapper<MoocUserT> entityWrapper = new EntityWrapper<>();
         entityWrapper.eq("user_name", username);
         Integer result = moocUserTMapper.selectCount(entityWrapper);
         if (result != null && result > 0) {
-            return false;   // 存在用户名
+            return true; // 用户名存在
         }
-        return true;    // 用户名不存在
+        return false; // 用户名不存在
     }
 
     private UserInfoModel dataObjectToUserInfo(MoocUserT moocUserT) {
