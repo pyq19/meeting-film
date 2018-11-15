@@ -2,7 +2,9 @@ package com.stylefeng.guns.rest.modular.user;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.stylefeng.guns.api.user.UserAPI;
+import com.stylefeng.guns.api.user.UserInfoModel;
 import com.stylefeng.guns.api.user.UserModel;
+import com.stylefeng.guns.rest.common.CurrentUser;
 import com.stylefeng.guns.rest.modular.vo.ResponseVO;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -59,6 +61,42 @@ public class UserController {
                 1、前端删除掉 JWT (没有集成 redis 无法判断用户是否活跃
          */
         return ResponseVO.success("用户退出成功");
+    }
+
+    @RequestMapping(name = "getUserInfo", method = RequestMethod.GET)
+    public ResponseVO getUserInfo() {
+        // 获取当前登录用户
+        String userId = CurrentUser.getCurrentUserId();
+        if (userId != null && userId.trim().length() > 0) {
+            // 将用户 id 传入后端进行查询
+            int uuid = Integer.parseInt(userId);
+            UserInfoModel userInfo = userAPI.getUserInfo(uuid);
+            if (userInfo != null) {
+                return ResponseVO.success(userInfo);
+            }
+            return ResponseVO.serviceFail("用户信息查询失败");
+        }
+        return ResponseVO.serviceFail("用户未登录");
+    }
+
+    @RequestMapping(name = "updateUserInfo", method = RequestMethod.POST)
+    public ResponseVO updateUserInfo(UserInfoModel userInfoModel) {
+        // 获取当前登录用户
+        String userId = CurrentUser.getCurrentUserId();
+        if (userId != null && userId.trim().length() > 0) {
+            // 将用户 id 传入后端进行查询
+            int uuid = Integer.parseInt(userId);
+            // 校验传入的用户 id 与 当前用户 id 是否相等，防止恶意修改别的用户信息
+            if (uuid != userInfoModel.getUuid()) {
+                return ResponseVO.serviceFail("请修改您个人的信息");
+            }
+            UserInfoModel userInfo = userAPI.updateUserInfo(userInfoModel);
+            if (userInfo != null) {
+                return ResponseVO.success(userInfo);
+            }
+            return ResponseVO.serviceFail("用户信息修改失败");
+        }
+        return ResponseVO.serviceFail("用户未登录");
     }
 
 }
