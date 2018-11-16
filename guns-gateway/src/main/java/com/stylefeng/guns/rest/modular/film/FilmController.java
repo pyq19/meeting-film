@@ -6,6 +6,7 @@ import com.stylefeng.guns.rest.modular.film.vo.FilmIndexVO;
 import com.stylefeng.guns.rest.modular.vo.ResponseVO;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -34,5 +35,20 @@ public class FilmController {
         // 获取 排名前100 的电影
         filmIndexVO.setTop100(filmServiceAPI.getTop());
         return ResponseVO.success(IMG_PRE, filmIndexVO);
+    }
+
+    // 影片条件列表查询接口
+    @RequestMapping(value = "getConditionList", method = RequestMethod.GET)
+    public ResponseVO getConditionList(
+            @RequestParam(name = "catId", required = false, defaultValue = "99") String catId,
+            @RequestParam(name = "sourceId", required = false, defaultValue = "99") String sourceId,
+            @RequestParam(name = "yearId", required = false, defaultValue = "99") String yearId) {
+        // 类型集合
+
+        // 片源集合
+
+        // 年代集合
+
+        return null;
     }
 }
