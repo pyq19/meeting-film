@@ -1,9 +1,11 @@
 package com.stylefeng.guns.api.user;
 
 
+import java.io.Serializable;
+
 // 查询用户信息用的 VO
 // 把敏感信息排除 进行业务操作
-public class UserInfoModel {
+public class UserInfoModel implements Serializable {
     private Integer uuid;
     private String username;    // 用户名
     private String nickname;    // 昵称
