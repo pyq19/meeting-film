@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class Client {
 
-    @Reference(interfaceClass = UserAPI.class)
+    @Reference(interfaceClass = UserAPI.class, check = false)
     private UserAPI userAPI;
 
     public void run() {
