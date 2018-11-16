@@ -36,8 +36,8 @@ public class AuthController {
 
         boolean validate = true;
         // 去掉 guns 自带的验证机制，改用 login
-//        int userId = userAPI.login(authRequest.getUserName(), authRequest.getPassword());
-        int userId = 3;
+        int userId = userAPI.login(authRequest.getUserName(), authRequest.getPassword());
+//        int userId = 3;
         if (userId == 0) {
             validate = false;
         }
