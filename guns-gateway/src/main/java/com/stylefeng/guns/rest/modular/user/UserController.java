@@ -16,7 +16,7 @@ public class UserController {
     @Reference(interfaceClass = UserAPI.class)
     private UserAPI userAPI;
 
-    @RequestMapping(name = "register", method = RequestMethod.POST)
+    @RequestMapping(value ="register", method = RequestMethod.POST)
     public ResponseVO register(UserModel userModel) {
         if (userModel.getUsername() == null || userModel.getUsername().trim().length() == 0) {
             return ResponseVO.serviceFail("用户名不能为空");
@@ -33,7 +33,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping(name = "check", method = RequestMethod.POST)
+    @RequestMapping(value ="check", method = RequestMethod.POST)
     public ResponseVO check(String username) {
         if (username != null && username.trim().length() > 0) {
             // 返回
@@ -47,7 +47,7 @@ public class UserController {
         return ResponseVO.serviceFail("用户名不能为空");
     }
 
-    @RequestMapping(name = "logout", method = RequestMethod.GET)
+    @RequestMapping(value ="logout", method = RequestMethod.GET)
     public ResponseVO logout() {
          /*
             应用：
@@ -63,7 +63,7 @@ public class UserController {
         return ResponseVO.success("用户退出成功");
     }
 
-    @RequestMapping(name = "getUserInfo", method = RequestMethod.GET)
+    @RequestMapping(value ="getUserInfo", method = RequestMethod.GET)
     public ResponseVO getUserInfo() {
         // 获取当前登录用户
         String userId = CurrentUser.getCurrentUserId();
@@ -79,7 +79,7 @@ public class UserController {
         return ResponseVO.serviceFail("用户未登录");
     }
 
-    @RequestMapping(name = "updateUserInfo", method = RequestMethod.POST)
+    @RequestMapping(value = "updateUserInfo", method = RequestMethod.POST)
     public ResponseVO updateUserInfo(UserInfoModel userInfoModel) {
         // 获取当前登录用户
         String userId = CurrentUser.getCurrentUserId();
