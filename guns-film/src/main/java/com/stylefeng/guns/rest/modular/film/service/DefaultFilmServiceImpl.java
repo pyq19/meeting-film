@@ -78,6 +78,7 @@ public class DefaultFilmServiceImpl implements FilmServiceAPI {
             List<MoocFilmT> moocFilms = moocFilmTMapper.selectPage(page, entityWrapper);
             // 组织 filmInfos
             filmInfos = getFilmInfos(moocFilms);
+            filmVO.setFilmNum(moocFilms.size());
             filmVO.setFilmInfo(filmInfos);
         } else {
             // 如果不是，则是列表页，同样需要限制内容为热映影片
@@ -103,6 +104,7 @@ public class DefaultFilmServiceImpl implements FilmServiceAPI {
             List<MoocFilmT> moocFilms = moocFilmTMapper.selectPage(page, entityWrapper);
             // 组织 filmInfos
             filmInfos = getFilmInfos(moocFilms);
+            filmVO.setFilmNum(moocFilms.size());
             filmVO.setFilmInfo(filmInfos);
         } else {
             // 如果不是，则是列表页，同样需要限制内容为热映影片
