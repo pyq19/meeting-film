@@ -1,10 +1,13 @@
 package com.stylefeng.guns.rest.modular.vo;
 
+import lombok.Data;
+
+@Data
 public class ResponseVO<M> {
     private int status; // 0成功 1失败 999异常
     private String msg;
-
     private M data;
+    private String imgPre;    // 图片前缀
 
     private ResponseVO() {
     }
@@ -16,7 +19,15 @@ public class ResponseVO<M> {
         return responseVO;
     }
 
-    public static <M> ResponseVO success(String  msg) {
+    public static <M> ResponseVO success(String imgPre, M m) {
+        ResponseVO responseVO = new ResponseVO();
+        responseVO.setStatus(0);
+        responseVO.setData(m);
+        responseVO.setImgPre(imgPre);
+        return responseVO;
+    }
+
+    public static <M> ResponseVO success(String msg) {
         ResponseVO responseVO = new ResponseVO();
         responseVO.setStatus(0);
         responseVO.setMsg(msg);
@@ -37,29 +48,5 @@ public class ResponseVO<M> {
         responseVO.setStatus(999);
         responseVO.setMsg(msg);
         return responseVO;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public M getData() {
-        return data;
-    }
-
-    public void setData(M data) {
-        this.data = data;
     }
 }
