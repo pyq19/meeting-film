@@ -28,11 +28,12 @@ public class EntityGenerator {
         AutoGenerator mpg = new AutoGenerator();
 
         // TODO see note2
-        String outPutDir = "";
+        String outPutDir = "/Users/Mccree/projects/meeting-film/guns-film/src/main/java";
         String dbUsername = "";
         String dbPassword = "";
         String dbUri = "";
         String author = "wrq";
+        String[] dbTableName = new String[]{"mooc_banner_t", "mooc_cat_dict_t", "mooc_area_dict_t", "mooc_year_dict_t", "mooc_film_t", "mooc_film_info_t", "mooc_actor_t"};
 
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
@@ -65,7 +66,7 @@ public class EntityGenerator {
         StrategyConfig strategy = new StrategyConfig();
         //strategy.setTablePrefix(new String[]{"_"});// 此处可以修改为您的表前缀
         strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
-        strategy.setInclude(new String[]{"mooc_user_t"});
+        strategy.setInclude(dbTableName);
         mpg.setStrategy(strategy);
 
         // 包配置
