@@ -389,6 +389,7 @@ public class DefaultFilmServiceImpl implements FilmServiceAPI {
     // 获取演员信息 actor
     @Override
     public List<ActorVO> getActors(String filmId) {
-        return null;
+        List<ActorVO> actors = moocActorTMapper.getActors(filmId);
+        return actors;
     }
 }

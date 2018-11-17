@@ -33,7 +33,8 @@ public class EntityGenerator {
         String dbPassword = "";
         String dbUri = "";
         String author = "wrq";
-        String[] dbTableName = new String[]{"mooc_banner_t", "mooc_cat_dict_t", "mooc_area_dict_t", "mooc_year_dict_t", "mooc_film_t", "mooc_film_info_t", "mooc_actor_t"};
+//        String[] dbTableName = new String[]{"mooc_banner_t", "mooc_cat_dict_t", "mooc_area_dict_t", "mooc_year_dict_t", "mooc_film_t", "mooc_film_info_t", "mooc_actor_t"};
+        String[] dbTableName = new String[]{"mooc_film_actor_t"};
 
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
