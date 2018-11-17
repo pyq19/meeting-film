@@ -199,6 +199,11 @@ public class FilmController {
     public ResponseVO films(@PathVariable("searchParam") String searchParam, int searchType) throws ExecutionException, InterruptedException {
         // 查询影片 基本信息 + 描述信息 (dubbo 一步获取
         FilmDetailVO filmDetail = filmServiceAPI.getFilmDetail(searchType, searchParam);
+        if (filmDetail == null) {
+            return ResponseVO.serviceFail("没有可查询的影片");
+        } else if (filmDetail.getFilmId() == null || filmDetail.getFilmId().trim().length() == 0) {
+            return ResponseVO.serviceFail("没有可查询的影片");
+        }
 
         String filmId = filmDetail.getFilmId();
         // 获取影片描述信息
