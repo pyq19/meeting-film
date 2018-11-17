@@ -10,13 +10,13 @@ public interface FilmServiceAPI {
     List<BannerVO> getBanners();
 
     // 获取热映影片
-    FilmVO getHotFilms(boolean isLimit,int nums,int nowPage,int sortId,int sourceId,int yearId,int catId);
+    FilmVO getHotFilms(boolean isLimit, int nums, int nowPage, int sortId, int sourceId, int yearId, int catId);
 
     // 获取即将上映影片【按受欢迎程度排序
-    FilmVO getSoonFilms(boolean isLimit,int nums,int nowPage,int sortId,int sourceId,int yearId,int catId);
+    FilmVO getSoonFilms(boolean isLimit, int nums, int nowPage, int sortId, int sourceId, int yearId, int catId);
 
     // 获取经典影片
-    FilmVO getClassicFilms(int nums,int nowPage,int sortId,int sourceId,int yearId,int catId);
+    FilmVO getClassicFilms(int nums, int nowPage, int sortId, int sourceId, int yearId, int catId);
 
     // 获取票房排行榜
     List<FilmInfo> getBoxRanking();
@@ -36,5 +36,10 @@ public interface FilmServiceAPI {
 
     // 获取年代
     List<YearVO> getYears();
+
+    // 根据影片 id 或名称获取影片信息
+    FilmDetailVO getFilmDetail(int searchType, String searchParam);
+
+    // 获取影片相关的其他信息【演员表、图片地址..
 
 }

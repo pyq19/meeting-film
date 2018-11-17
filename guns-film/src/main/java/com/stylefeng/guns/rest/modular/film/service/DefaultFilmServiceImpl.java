@@ -319,4 +319,10 @@ public class DefaultFilmServiceImpl implements FilmServiceAPI {
         }
         return result;
     }
+
+    // 根据影片 id 或名称获取影片信息
+    @Override
+    public FilmDetailVO getFilmDetail(int searchType, String searchParam) {
+        return null;
+    }
 }
