@@ -1,6 +1,7 @@
 package com.stylefeng.guns.rest.modular.film;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.stylefeng.guns.api.film.FilmAsyncServiceAPI;
 import com.stylefeng.guns.api.film.FilmServiceAPI;
 import com.stylefeng.guns.api.film.vo.*;
 import com.stylefeng.guns.rest.modular.film.vo.FilmConditionVO;
@@ -20,6 +21,9 @@ public class FilmController {
 
     @Reference(interfaceClass = FilmServiceAPI.class)
     private FilmServiceAPI filmServiceAPI;
+
+    @Reference(interfaceClass = FilmAsyncServiceAPI.class, async = true)
+    private FilmAsyncServiceAPI filmAsyncServiceAPI;
 
     // 获取首页信息（网关 API 聚合
     @RequestMapping(value = "getIndex", method = RequestMethod.GET)
@@ -195,16 +199,16 @@ public class FilmController {
 
         String filmId = filmDetail.getFilmId();
         // 获取影片描述信息
-        FilmDescVO filmDescVO = filmServiceAPI.getFilmDesc(filmId);
+        FilmDescVO filmDescVO = filmAsyncServiceAPI.getFilmDesc(filmId);
 
         // 获取图片地址 img
-        ImgVO imgVO = filmServiceAPI.getImgs(filmId);
+        ImgVO imgVO = filmAsyncServiceAPI.getImgs(filmId);
 
         // 获取导演信息
-        ActorVO directorVO = filmServiceAPI.getDectInfo(filmId);
+        ActorVO directorVO = filmAsyncServiceAPI.getDectInfo(filmId);
 
         // 获取演员信息 actor
-        List<ActorVO> actorsVO = filmServiceAPI.getActors(filmId);
+        List<ActorVO> actorsVO = filmAsyncServiceAPI.getActors(filmId);
 
         // 组织 info 对象
         InfoRequestVO infoRequestVO = new InfoRequestVO();
