@@ -190,8 +190,17 @@ public class FilmController {
     // 2. 按名称查: ElasticSearch / solar
     @RequestMapping(value = "films/{searchParam}", method = RequestMethod.GET)
     public ResponseVO films(@PathVariable("searchParam") String searchParam, int searchType) {
-        // 查询影片 基本信息 + 详细信息 (dubbo 一步获取
+        // 查询影片 基本信息 + 描述信息 (dubbo 一步获取
         FilmDetailVO filmDetail = filmServiceAPI.getFilmDetail(searchType, searchParam);
+
+        // 获取影片描述信息
+
+        // 获取图片地址 img
+
+        // 获取导演信息
+
+        // 获取演员信息 actor
+
         return null;
     }
 }
