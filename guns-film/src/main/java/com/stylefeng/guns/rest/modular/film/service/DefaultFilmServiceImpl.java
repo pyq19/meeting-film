@@ -6,14 +6,8 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.api.film.FilmServiceAPI;
 import com.stylefeng.guns.api.film.vo.*;
 import com.stylefeng.guns.core.util.DateUtil;
-import com.stylefeng.guns.rest.common.persistence.dao.MoocBannerTMapper;
-import com.stylefeng.guns.rest.common.persistence.dao.MoocCatDictTMapper;
-import com.stylefeng.guns.rest.common.persistence.dao.MoocFilmTMapper;
-import com.stylefeng.guns.rest.common.persistence.dao.MoocYearDictTMapper;
-import com.stylefeng.guns.rest.common.persistence.model.MoocBannerT;
-import com.stylefeng.guns.rest.common.persistence.model.MoocCatDictT;
-import com.stylefeng.guns.rest.common.persistence.model.MoocFilmT;
-import com.stylefeng.guns.rest.common.persistence.model.MoocYearDictT;
+import com.stylefeng.guns.rest.common.persistence.dao.*;
+import com.stylefeng.guns.rest.common.persistence.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -35,6 +29,9 @@ public class DefaultFilmServiceImpl implements FilmServiceAPI {
 
     @Autowired
     private MoocYearDictTMapper moocYearDictTMapper;
+
+    @Autowired
+    private MoocSourceDictTMapper moocSourceDictTMapper;
 
     @Override
     public List<BannerVO> getBanners() {
@@ -180,7 +177,15 @@ public class DefaultFilmServiceImpl implements FilmServiceAPI {
     // 影片来源(地)
     @Override
     public List<SourceVO> getSources() {
-        return null;
+        List<SourceVO> result = new ArrayList<>();
+        List<MoocSourceDictT> sources = moocSourceDictTMapper.selectList(null);
+        for (MoocSourceDictT ms : sources) {
+            SourceVO sv = new SourceVO();
+            sv.setSourceId(ms.getUuid() + "");
+            sv.setSourceName(ms.getShowName());
+            result.add(sv);
+        }
+        return result;
     }
 
     // 影片年代
