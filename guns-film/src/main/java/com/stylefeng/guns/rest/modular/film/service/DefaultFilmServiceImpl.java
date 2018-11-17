@@ -68,7 +68,7 @@ public class DefaultFilmServiceImpl implements FilmServiceAPI {
     // 正在热映
     // isLimit 决定了到底是首页的 8 张，还是列表页
     @Override
-    public FilmVO getHotFilms(boolean isLimit, int nums) {
+    public FilmVO getHotFilms(boolean isLimit,int nums,int nowPage,int sortId,int sourceId,int yearId,int catId) {
         FilmVO filmVO = new FilmVO();
         List<FilmInfo> filmInfos = new ArrayList<>();
 
@@ -94,7 +94,7 @@ public class DefaultFilmServiceImpl implements FilmServiceAPI {
 
     // 即将上映
     @Override
-    public FilmVO getSoonFilms(boolean isLimit, int nums) {
+    public FilmVO getSoonFilms(boolean isLimit,int nums,int nowPage,int sortId,int sourceId,int yearId,int catId) {
         FilmVO filmVO = new FilmVO();
         List<FilmInfo> filmInfos = new ArrayList<>();
 
@@ -116,6 +116,11 @@ public class DefaultFilmServiceImpl implements FilmServiceAPI {
 
         }
         return filmVO;
+    }
+
+    @Override
+    public FilmVO getClassicFilms(int nums, int nowPage, int sortId, int sourceId, int yearId, int catId) {
+        return null;
     }
 
     // 票房排行榜

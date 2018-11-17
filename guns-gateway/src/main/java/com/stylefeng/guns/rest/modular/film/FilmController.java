@@ -32,8 +32,10 @@ public class FilmController {
         FilmIndexVO filmIndexVO = new FilmIndexVO();
         // 获取 banner 信息
         filmIndexVO.setBanner(filmServiceAPI.getBanners());
+        // TODO
         // 获取 正在热映 的电影
         filmIndexVO.setHotFilm(filmServiceAPI.getHotFilms(true, 8));
+        // TODO
         // 获取 即将上映 的电影
         filmIndexVO.setSoonFilm(filmServiceAPI.getSoonFilms(true, 8));
         // 获取 票房排行榜
@@ -157,7 +159,7 @@ public class FilmController {
         // 添加各种条件查询
 
         // 判断当前是第几页
-        
+
         return null;
     }
 }
