@@ -10,10 +10,7 @@ import com.stylefeng.guns.rest.modular.film.vo.FilmConditionVO;
 import com.stylefeng.guns.rest.modular.film.vo.FilmIndexVO;
 import com.stylefeng.guns.rest.modular.film.vo.FilmRequestVO;
 import com.stylefeng.guns.rest.modular.vo.ResponseVO;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -149,6 +146,7 @@ public class FilmController {
         return ResponseVO.success(filmConditionVO);
     }
 
+    // 影片查询接口
     @RequestMapping(value = "getFilms", method = RequestMethod.GET)
     public ResponseVO getFilms(FilmRequestVO filmRequestVO) {
         String img_pre = IMG_PRE;
@@ -187,5 +185,15 @@ public class FilmController {
         return ResponseVO.success(
                 filmVO.getNowPage(), filmVO.getTotalPage(),
                 img_pre, filmVO.getFilmInfo());
+    }
+
+    // 影片详情查询接口 /film/films/{影片编号(单个影片)/影片名称(搜索)}
+    // 根据 searchType 判断查询类型
+    // 1. 按 id 查: redis -> mysql
+    // 2. 按名称查: ElasticSearch / solar
+    @RequestMapping(value = "films/{searchParam}", method = RequestMethod.GET)
+    public ResponseVO films(@PathVariable("searchParam") String searchParam, int requestType) {
+        // 查询影片 基本信息 + 详细信息 (dubbo 一步获取
+        return null;
     }
 }
