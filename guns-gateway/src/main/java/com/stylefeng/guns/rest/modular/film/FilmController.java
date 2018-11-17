@@ -3,6 +3,7 @@ package com.stylefeng.guns.rest.modular.film;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.stylefeng.guns.api.film.FilmServiceAPI;
 import com.stylefeng.guns.api.film.vo.CatVO;
+import com.stylefeng.guns.api.film.vo.FilmVO;
 import com.stylefeng.guns.api.film.vo.SourceVO;
 import com.stylefeng.guns.api.film.vo.YearVO;
 import com.stylefeng.guns.rest.modular.film.vo.FilmConditionVO;
@@ -32,12 +33,10 @@ public class FilmController {
         FilmIndexVO filmIndexVO = new FilmIndexVO();
         // 获取 banner 信息
         filmIndexVO.setBanner(filmServiceAPI.getBanners());
-        // TODO
         // 获取 正在热映 的电影
-        filmIndexVO.setHotFilm(filmServiceAPI.getHotFilms(true, 8));
-        // TODO
+        filmIndexVO.setHotFilm(filmServiceAPI.getHotFilms(true, 8, 1, 1, 99, 99, 99));
         // 获取 即将上映 的电影
-        filmIndexVO.setSoonFilm(filmServiceAPI.getSoonFilms(true, 8));
+        filmIndexVO.setSoonFilm(filmServiceAPI.getSoonFilms(true, 8, 1, 1, 99, 99, 99));
         // 获取 票房排行榜
         filmIndexVO.setBoxRanking(filmServiceAPI.getBoxRanking());
         // 获取 受欢迎的榜单
@@ -152,14 +151,41 @@ public class FilmController {
 
     @RequestMapping(value = "getFilms", method = RequestMethod.GET)
     public ResponseVO getFilms(FilmRequestVO filmRequestVO) {
+        String img_pre = IMG_PRE;
+        FilmVO filmVO;
         // 根据 shotType 判断影片查询类型
+        switch (filmRequestVO.getShowType()) {
+            // 根据 sortId 排序
+            // 添加各种条件查询
+            // 判断当前是第几页
+            case 1:
+                filmVO = filmServiceAPI.getHotFilms(
+                        false, filmRequestVO.getPageSize(), filmRequestVO.getNowPage(),
+                        filmRequestVO.getSortId(), filmRequestVO.getSourceId(), filmRequestVO.getYearId(),
+                        filmRequestVO.getCatId());
+                break;
+            case 2:
+                filmVO = filmServiceAPI.getSoonFilms(
+                        false, filmRequestVO.getPageSize(), filmRequestVO.getNowPage(),
+                        filmRequestVO.getSortId(), filmRequestVO.getSourceId(), filmRequestVO.getYearId(),
+                        filmRequestVO.getCatId());
+                break;
+            case 3:
+                filmVO = filmServiceAPI.getClassicFilms(
+                        filmRequestVO.getPageSize(), filmRequestVO.getNowPage(),
+                        filmRequestVO.getSortId(), filmRequestVO.getSourceId(),
+                        filmRequestVO.getYearId(), filmRequestVO.getCatId());
+                break;
+            default:
+                filmVO = filmServiceAPI.getHotFilms(
+                        false, filmRequestVO.getPageSize(), filmRequestVO.getNowPage(),
+                        filmRequestVO.getSortId(), filmRequestVO.getSourceId(), filmRequestVO.getYearId(),
+                        filmRequestVO.getCatId());
+                break;
+        }
 
-        // 根据 sortId 排序
-
-        // 添加各种条件查询
-
-        // 判断当前是第几页
-
-        return null;
+        return ResponseVO.success(
+                filmVO.getNowPage(), filmVO.getTotalPage(),
+                img_pre, filmVO.getFilmInfo());
     }
 }
