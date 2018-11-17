@@ -7,9 +7,13 @@ import com.stylefeng.guns.api.film.FilmServiceAPI;
 import com.stylefeng.guns.api.film.vo.*;
 import com.stylefeng.guns.core.util.DateUtil;
 import com.stylefeng.guns.rest.common.persistence.dao.MoocBannerTMapper;
+import com.stylefeng.guns.rest.common.persistence.dao.MoocCatDictTMapper;
 import com.stylefeng.guns.rest.common.persistence.dao.MoocFilmTMapper;
+import com.stylefeng.guns.rest.common.persistence.dao.MoocYearDictTMapper;
 import com.stylefeng.guns.rest.common.persistence.model.MoocBannerT;
+import com.stylefeng.guns.rest.common.persistence.model.MoocCatDictT;
 import com.stylefeng.guns.rest.common.persistence.model.MoocFilmT;
+import com.stylefeng.guns.rest.common.persistence.model.MoocYearDictT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,6 +29,12 @@ public class DefaultFilmServiceImpl implements FilmServiceAPI {
 
     @Autowired
     private MoocFilmTMapper moocFilmTMapper;
+
+    @Autowired
+    private MoocCatDictTMapper moocCatDictTMapper;
+
+    @Autowired
+    private MoocYearDictTMapper moocYearDictTMapper;
 
     @Override
     public List<BannerVO> getBanners() {
@@ -154,7 +164,17 @@ public class DefaultFilmServiceImpl implements FilmServiceAPI {
     // 影片分类
     @Override
     public List<CatVO> getCats() {
-        return null;
+        List<CatVO> result = new ArrayList<>();
+        // 查询实体对象 MoocCatDictT
+        List<MoocCatDictT> moocCatDictTList = moocCatDictTMapper.selectList(null);
+        // 将实体对象转换为业务对象 CatVO
+        for (MoocCatDictT mc : moocCatDictTList) {
+            CatVO cv = new CatVO();
+            cv.setCatId(mc.getUuid() + "");
+            cv.setCatName(mc.getShowName());
+            result.add(cv);
+        }
+        return result;
     }
 
     // 影片来源(地)
@@ -166,6 +186,16 @@ public class DefaultFilmServiceImpl implements FilmServiceAPI {
     // 影片年代
     @Override
     public List<YearVO> getYears() {
-        return null;
+        List<YearVO> result = new ArrayList<>();
+        // 查询实体对象 MoocYearDictT
+        List<MoocYearDictT> years = moocYearDictTMapper.selectList(null);
+        // 将实体对象转换为业务对象 YearVO
+        for (MoocYearDictT y : years) {
+            YearVO yv = new YearVO();
+            yv.setYearId(y.getUuid() + "");
+            yv.setYearName(y.getShowName());
+            result.add(yv);
+        }
+        return result;
     }
 }
