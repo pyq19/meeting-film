@@ -44,6 +44,7 @@ public class FilmController {
             @RequestParam(name = "sourceId", required = false, defaultValue = "99") String sourceId,
             @RequestParam(name = "yearId", required = false, defaultValue = "99") String yearId) {
         // 类型集合
+            // 判断集合是否存在 catId，如果存在，则将对应的实体变成 active 状态
 
         // 片源集合
 
