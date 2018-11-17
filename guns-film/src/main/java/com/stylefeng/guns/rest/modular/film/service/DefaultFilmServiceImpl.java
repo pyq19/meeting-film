@@ -324,6 +324,13 @@ public class DefaultFilmServiceImpl implements FilmServiceAPI {
     @Override
     public FilmDetailVO getFilmDetail(int searchType, String searchParam) {
         // searchType 0: 按 id 查找 1: 按名称查找
-        return null;
+        FilmDetailVO filmDetailVO = null;
+        if (searchType == 1) {
+            filmDetailVO = moocFilmTMapper.getFilmDetailByName("%" + searchParam + "%");
+        } else {
+            filmDetailVO = moocFilmTMapper.getFilmDetailById(searchParam);
+        }
+
+        return filmDetailVO;
     }
 }

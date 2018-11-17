@@ -2,10 +2,7 @@ package com.stylefeng.guns.rest.modular.film;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.stylefeng.guns.api.film.FilmServiceAPI;
-import com.stylefeng.guns.api.film.vo.CatVO;
-import com.stylefeng.guns.api.film.vo.FilmVO;
-import com.stylefeng.guns.api.film.vo.SourceVO;
-import com.stylefeng.guns.api.film.vo.YearVO;
+import com.stylefeng.guns.api.film.vo.*;
 import com.stylefeng.guns.rest.modular.film.vo.FilmConditionVO;
 import com.stylefeng.guns.rest.modular.film.vo.FilmIndexVO;
 import com.stylefeng.guns.rest.modular.film.vo.FilmRequestVO;
@@ -192,8 +189,9 @@ public class FilmController {
     // 1. 按 id 查: redis -> mysql
     // 2. 按名称查: ElasticSearch / solar
     @RequestMapping(value = "films/{searchParam}", method = RequestMethod.GET)
-    public ResponseVO films(@PathVariable("searchParam") String searchParam, int requestType) {
+    public ResponseVO films(@PathVariable("searchParam") String searchParam, int searchType) {
         // 查询影片 基本信息 + 详细信息 (dubbo 一步获取
+        FilmDetailVO filmDetail = filmServiceAPI.getFilmDetail(searchType, searchParam);
         return null;
     }
 }
