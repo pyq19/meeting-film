@@ -193,14 +193,32 @@ public class FilmController {
         // 查询影片 基本信息 + 描述信息 (dubbo 一步获取
         FilmDetailVO filmDetail = filmServiceAPI.getFilmDetail(searchType, searchParam);
 
+        String filmId = filmDetail.getFilmId();
         // 获取影片描述信息
+        FilmDescVO filmDescVO = filmServiceAPI.getFilmDesc(filmId);
 
         // 获取图片地址 img
+        ImgVO imgVO = filmServiceAPI.getImgs(filmId);
 
         // 获取导演信息
+        ActorVO directorVO = filmServiceAPI.getDectInfo(filmId);
 
         // 获取演员信息 actor
+        List<ActorVO> actorsVO = filmServiceAPI.getActors(filmId);
 
-        return null;
+        // 组织 info 对象
+        InfoRequestVO infoRequestVO = new InfoRequestVO();
+        // 组织 actor 属性
+        ActorRequestVO actorRequestVO = new ActorRequestVO();
+        actorRequestVO.setActors(actorsVO);
+        actorRequestVO.setDirector(directorVO);
+        infoRequestVO.setActors(actorRequestVO);
+        infoRequestVO.setBiography(filmDescVO.getBiography());
+        infoRequestVO.setFilmId(filmId);
+        infoRequestVO.setImgVO(imgVO);
+        // 组织成返回值
+        filmDetail.setInfo04(infoRequestVO);
+
+        return ResponseVO.success(IMG_PRE, filmDetail);
     }
 }
