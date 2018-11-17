@@ -47,7 +47,7 @@ public class AuthFilter extends OncePerRequestFilter {
         String[] ignoreUrls = ignoreUrl.split(",");
         for (int i = 0; i < ignoreUrls.length; i++) {
             // 如果匹配得到 则不走 jwt 验证
-            if (request.getServletPath().equals(ignoreUrls[i])) {
+            if (request.getServletPath().startsWith(ignoreUrls[i])) {
                 chain.doFilter(request, response);
                 return;
             }
