@@ -56,4 +56,17 @@
         AND f.`cinema_id` = ${cinemaId}
     </select>
 
+    <select id="getHallInfo" parameterType="java.lang.Integer" resultType="com.stylefeng.guns.api.cinema.vo.HallInfoVO">
+        SELECT
+          f.`UUID` AS hallFieldId,
+          f.`hall_name` AS hallName,
+          f.`price` AS price,
+          hall.`seat_address` AS seatFile
+        FROM
+          mooc_hall_dict_t hall,
+          mooc_field_t f
+        WHERE f.`hall_id` = hall.`UUID`
+          AND f.`UUID` = 1
+    </select>
+
 </mapper>
