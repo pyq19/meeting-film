@@ -28,13 +28,14 @@ public class EntityGenerator {
         AutoGenerator mpg = new AutoGenerator();
 
         // TODO see note2
-        String outPutDir = "/Users/Mccree/projects/meeting-film/guns-film/src/main/java";
+        String outPutDir = "/Users/Mccree/projects/meeting-film/guns-cinema/src/main/java";
+        String dbUri = "";
         String dbUsername = "";
         String dbPassword = "";
-        String dbUri = "";
         String author = "wrq";
 //        String[] dbTableName = new String[]{"mooc_banner_t", "mooc_cat_dict_t", "mooc_area_dict_t", "mooc_year_dict_t", "mooc_film_t", "mooc_film_info_t", "mooc_actor_t"};
-        String[] dbTableName = new String[]{"mooc_film_actor_t"};
+//        String[] dbTableName = new String[]{"mooc_film_actor_t"};
+        String[] dbTableName = new String[]{"mooc_brand_dict_t", "mooc_area_dict_t", "mooc_hall_dict_t", "mooc_cinema_t", "mooc_field_t", "mooc_hall_film_info_t"};
 
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
