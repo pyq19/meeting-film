@@ -1,13 +1,16 @@
 package com.stylefeng.guns.rest.modular.cinema.service;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.api.cinema.CinemaServiceAPI;
 import com.stylefeng.guns.api.cinema.vo.*;
 import com.stylefeng.guns.rest.common.persistence.dao.*;
+import com.stylefeng.guns.rest.common.persistence.model.MoocCinemaT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -35,7 +38,39 @@ public class DefaultCinemaServiceImpl implements CinemaServiceAPI {
     // 1、根据CinemaQueryVO，查询影院列表
     @Override
     public Page<CinemaVO> getCinemas(CinemaQueryVO cinemaQueryVO) {
-        return null;
+        // 业务实体集合
+        List<CinemaVO> cinemas = new ArrayList<>();
+        Page<MoocCinemaT> page = new Page<>(cinemaQueryVO.getNowPage(), cinemaQueryVO.getPageSize());
+        // 判断是否传入查询条件 -> brandId，distId，hallType 是否 == 99
+        EntityWrapper<MoocCinemaT> entityWrapper = new EntityWrapper<>();
+        if (cinemaQueryVO.getBrandId() != 99) {
+            entityWrapper.eq("brand_id", cinemaQueryVO.getBrandId());
+        }
+        if (cinemaQueryVO.getDistrictId() != 99) {
+            entityWrapper.eq("area_id", cinemaQueryVO.getDistrictId());
+        }
+        if (cinemaQueryVO.getHallType() != 99) {  // %#3#%
+            entityWrapper.like("hall_ids", "%#+" + cinemaQueryVO.getHallType() + "+#%");
+        }
+
+        // 将数据实体转换为业务实体
+        List<MoocCinemaT> moocCinemaTS = moocCinemaTMapper.selectPage(page, entityWrapper);
+        for (MoocCinemaT moocCinemaT : moocCinemaTS) {
+            CinemaVO cinemaVO = new CinemaVO();
+            cinemaVO.setUuid(moocCinemaT.getUuid() + "");
+            cinemaVO.setMinimumPrice(moocCinemaT.getMinimumPrice() + "");
+            cinemaVO.setCinemaName(moocCinemaT.getCinemaName());
+            cinemaVO.setAddress(moocCinemaT.getCinemaAddress());
+            cinemas.add(cinemaVO);
+        }
+        // 根据条件判断影院列表总数
+        long counts = moocCinemaTMapper.selectCount(entityWrapper);
+        // 组织返回值对象
+        Page<CinemaVO> result = new Page<>();
+        result.setRecords(cinemas);
+        result.setSize(cinemaQueryVO.getPageSize());
+        result.setTotal(counts);
+        return result;
     }
 
     // 2、根据条件获取品牌列表 [除了就 99 以外，其他的数字为 isActive(前端渲染选中时红圈) ]
