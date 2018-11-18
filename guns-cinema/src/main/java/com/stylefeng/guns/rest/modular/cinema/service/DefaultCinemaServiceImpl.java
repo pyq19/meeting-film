@@ -193,7 +193,8 @@ public class DefaultCinemaServiceImpl implements CinemaServiceAPI {
     // 6、获取所有电影的信息和对应的*放映场次*信息，根据影院编号
     @Override
     public List<FilmInfoVO> getFilmInfoByCinemaId(int cinemaId) {
-        return null;
+        List<FilmInfoVO> filmInfos = moocFieldTMapper.getFilmInfos(cinemaId);
+        return filmInfos;
     }
 
     // 7、根据放映场次ID获取放映信息
