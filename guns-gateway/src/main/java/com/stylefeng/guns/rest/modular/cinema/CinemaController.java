@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.api.cinema.CinemaServiceAPI;
 import com.stylefeng.guns.api.cinema.vo.*;
 import com.stylefeng.guns.rest.modular.cinema.vo.CinemaConditionResponseVO;
-import com.stylefeng.guns.rest.modular.cinema.vo.CinemaFieldResponseVO;
+import com.stylefeng.guns.rest.modular.cinema.vo.CinemaFieldsResponseVO;
 import com.stylefeng.guns.rest.modular.vo.ResponseVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -69,10 +69,10 @@ public class CinemaController {
         try {
             CinemaInfoVO cinemaInfoById = cinemaServiceAPI.getCinemaInfoById(cinemaId);
             List<FilmInfoVO> filmInfoByCinemaId = cinemaServiceAPI.getFilmInfoByCinemaId(cinemaId);
-            CinemaFieldResponseVO cinemaFieldResponseVO = new CinemaFieldResponseVO();
-            cinemaFieldResponseVO.setCinemaInfo(cinemaInfoById);
-            cinemaFieldResponseVO.setFilmList(filmInfoByCinemaId);
-            return ResponseVO.success(IMG_PRE, cinemaFieldResponseVO);
+            CinemaFieldsResponseVO cinemaFieldsResponseVO = new CinemaFieldsResponseVO();
+            cinemaFieldsResponseVO.setCinemaInfo(cinemaInfoById);
+            cinemaFieldsResponseVO.setFilmList(filmInfoByCinemaId);
+            return ResponseVO.success(IMG_PRE, cinemaFieldsResponseVO);
         } catch (Exception e) {
             log.error("获取播放场次失败", e);
             return ResponseVO.serviceFail("获取播放场次失败");
