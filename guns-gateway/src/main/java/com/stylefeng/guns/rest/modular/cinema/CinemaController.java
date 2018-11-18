@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.api.cinema.CinemaServiceAPI;
 import com.stylefeng.guns.api.cinema.vo.*;
 import com.stylefeng.guns.rest.modular.cinema.vo.CinemaConditionResponseVO;
+import com.stylefeng.guns.rest.modular.cinema.vo.CinemaFieldResponseVO;
 import com.stylefeng.guns.rest.modular.vo.ResponseVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,8 @@ public class CinemaController {
 
     @Reference(interfaceClass = CinemaServiceAPI.class, check = false)
     private CinemaServiceAPI cinemaServiceAPI;
+
+    public static final String IMG_PRE = "http://image.impyq.com/";
 
     // 查询影院列表
     @RequestMapping(value = "getCinemas")
@@ -63,7 +66,17 @@ public class CinemaController {
     // 1. 根据影院编号，获取影院信息；2. 获取所有电影的信息和对应的放映场次信息
     @RequestMapping(value = "getFields")
     public ResponseVO getFields(Integer cinemaId) {
-        return null;
+        try {
+            CinemaInfoVO cinemaInfoById = cinemaServiceAPI.getCinemaInfoById(cinemaId);
+            List<FilmInfoVO> filmInfoByCinemaId = cinemaServiceAPI.getFilmInfoByCinemaId(cinemaId);
+            CinemaFieldResponseVO cinemaFieldResponseVO = new CinemaFieldResponseVO();
+            cinemaFieldResponseVO.setCinemaInfo(cinemaInfoById);
+            cinemaFieldResponseVO.setFilmList(filmInfoByCinemaId);
+            return ResponseVO.success(IMG_PRE, cinemaFieldResponseVO);
+        } catch (Exception e) {
+            log.error("获取播放场次失败", e);
+            return ResponseVO.serviceFail("获取播放场次失败");
+        }
     }
 
     // 获取场次详细信息
