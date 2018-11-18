@@ -69,4 +69,21 @@
           AND f.`UUID` = 1
     </select>
 
+    <select id="getFilmInfoById" parameterType="java.lang.Integer"
+            resultType="com.stylefeng.guns.api.cinema.vo.FilmInfoVO">
+        SELECT
+          f.`film_id` AS filmId,
+          info.`film_name` AS filmName,
+          info.`film_length` AS filmLength,
+          info.`film_language` AS filmType,
+          info.`film_cats` AS filmCats,
+          info.`actors` AS actors,
+          info.`img_address` AS imgAddress
+        FROM
+          mooc_field_t f,
+          mooc_hall_film_info_t info
+        WHERE f.`film_id` = info.`film_id`
+          AND f.`UUID` = ${fieldId}
+    </select>
+
 </mapper>
