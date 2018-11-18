@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.api.cinema.CinemaServiceAPI;
 import com.stylefeng.guns.api.cinema.vo.*;
 import com.stylefeng.guns.rest.modular.cinema.vo.CinemaConditionResponseVO;
+import com.stylefeng.guns.rest.modular.cinema.vo.CinemaFieldResponseVO;
 import com.stylefeng.guns.rest.modular.cinema.vo.CinemaFieldsResponseVO;
 import com.stylefeng.guns.rest.modular.vo.ResponseVO;
 import lombok.extern.slf4j.Slf4j;
@@ -86,6 +87,20 @@ public class CinemaController {
     // 4. 根据放映场次 id 获取已售座位
     @RequestMapping(value = "getFieldInfo", method = RequestMethod.POST)
     public ResponseVO getFieldInfo(Integer cinemaId, Integer fieldId) {
-        return null;
+        try {
+            CinemaInfoVO cinemaInfoById = cinemaServiceAPI.getCinemaInfoById(cinemaId);
+            FilmInfoVO filmInfoByFieldId = cinemaServiceAPI.getFilmInfoByFieldId(fieldId);
+            HallInfoVO filmFieldInfo = cinemaServiceAPI.getFilmFieldInfo(fieldId);
+            // 造几个销售的假数据，后续会对接订单接口
+            filmFieldInfo.setSoldSeats("1,2,3");
+            CinemaFieldResponseVO cinemaFieldResponseVO = new CinemaFieldResponseVO();
+            cinemaFieldResponseVO.setCinemaInfo(cinemaInfoById);
+            cinemaFieldResponseVO.setFilmInfo(filmInfoByFieldId);
+            cinemaFieldResponseVO.setHallInfo(filmFieldInfo);
+            return ResponseVO.success(IMG_PRE, cinemaFieldResponseVO);
+        } catch (Exception e) {
+            log.error("获取选座信息失败", e);
+            return ResponseVO.serviceFail("获取选座信息失败");
+        }
     }
 }
