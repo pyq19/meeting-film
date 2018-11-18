@@ -177,7 +177,17 @@ public class DefaultCinemaServiceImpl implements CinemaServiceAPI {
     // 5、根据影院编号，获取影院信息
     @Override
     public CinemaInfoVO getCinemaInfoById(int cinemaId) {
-        return null;
+        MoocCinemaT moocCinemaT = moocCinemaTMapper.selectById(cinemaId);
+        if (moocCinemaT == null) {
+            return new CinemaInfoVO();
+        }
+        CinemaInfoVO cinemaInfoVO = new CinemaInfoVO();
+        cinemaInfoVO.setImgUrl(moocCinemaT.getImgAddress());
+        cinemaInfoVO.setCinemaPhone(moocCinemaT.getCinemaPhone());
+        cinemaInfoVO.setCinemaName(moocCinemaT.getCinemaName());
+        cinemaInfoVO.setCinemaId(moocCinemaT.getUuid() + "");
+        cinemaInfoVO.setCinemaId(moocCinemaT.getCinemaAddress());
+        return cinemaInfoVO;
     }
 
     // 6、获取所有电影的信息和对应的*放映场次*信息，根据影院编号
