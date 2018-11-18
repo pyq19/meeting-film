@@ -20,7 +20,7 @@ import java.util.List;
 @RequestMapping("/cinema/")
 public class CinemaController {
 
-    @Reference(interfaceClass = CinemaServiceAPI.class, check = false)
+    @Reference(interfaceClass = CinemaServiceAPI.class, cache = "lru", check = false)
     private CinemaServiceAPI cinemaServiceAPI;
 
     public static final String IMG_PRE = "http://image.impyq.com/";
@@ -43,7 +43,7 @@ public class CinemaController {
         }
     }
 
-    // 获取影院列表查询条件
+    // 获取影院列表查询条件（热点数据 用 dubbo 缓存
     // 根据条件获取 品牌列表、行政区域列表、影厅类型列表
     @RequestMapping(value = "getCondition")
     public ResponseVO getCondition(CinemaQueryVO cinemaQueryVO) {
