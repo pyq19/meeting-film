@@ -152,8 +152,15 @@ public class DefaultOrderServiceImpl implements OrderServiceAPI {
         }
     }
 
+    // 根据放映查询，获取所有的已售座位
     @Override
     public String getSoldSeatsByFieldId(Integer fieldId) {
-        return null;
+        if (fieldId == null) {
+            log.error("查询已售座位错误，未传入任何场次编号");
+            return "";
+        } else {
+            String soldSeatsByFieldId = moocOrderTMapper.getSoldSeatsByFieldId(fieldId);
+            return soldSeatsByFieldId;
+        }
     }
 }

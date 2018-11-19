@@ -68,4 +68,8 @@
           AND o.`order_user` = #{userId}
     </select>
 
+    <select id="getSoldSeatsByFieldId" parameterType="java.lang.Integer" resultType="java.lang.String">
+        SELECT GROUP_CONCAT(seats_ids) FROM mooc_order_t where field_id=#{fieldId}
+    </select>
+
 </mapper>
