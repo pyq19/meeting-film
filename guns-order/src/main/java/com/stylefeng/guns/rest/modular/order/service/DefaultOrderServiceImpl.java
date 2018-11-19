@@ -2,13 +2,17 @@ package com.stylefeng.guns.rest.modular.order.service;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.api.order.OrderServiceAPI;
 import com.stylefeng.guns.api.order.vo.OrderVO;
 import com.stylefeng.guns.rest.common.persistence.dao.MoocOrderTMapper;
+import com.stylefeng.guns.rest.common.persistence.model.MoocOrderT;
 import com.stylefeng.guns.rest.common.util.FTPUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 @Service(interfaceClass = OrderServiceAPI.class, group = "default")
@@ -50,9 +54,25 @@ public class DefaultOrderServiceImpl implements OrderServiceAPI {
         }
     }
 
+    // 判断是否为已售座位
     @Override
     public boolean isNotSoldSeats(String fieldId, String seats) {
-        return false;
+        EntityWrapper entityWrapper = new EntityWrapper();
+        entityWrapper.eq("field_id", fieldId);
+        List<MoocOrderT> list = moocOrderTMapper.selectList(entityWrapper);
+        String[] seatArrs = seats.split(",");
+        // 有任何一个编号匹配上，则直接返回失败，可优化通过 SQL
+        for (MoocOrderT moocOrderT : list) {
+            String[] ids = moocOrderT.getSeatsIds().split(",");
+            for (String id : ids) {
+                for (String seat : seatArrs) {
+                    if (id.equalsIgnoreCase(seat)) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     @Override
