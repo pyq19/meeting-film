@@ -3,7 +3,6 @@ package com.stylefeng.guns.rest.modular.order.service;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.api.cinema.CinemaServiceAPI;
 import com.stylefeng.guns.api.cinema.vo.FilmInfoVO;
 import com.stylefeng.guns.api.cinema.vo.OrderQueryVO;
@@ -19,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -114,7 +114,13 @@ public class DefaultOrderServiceImpl implements OrderServiceAPI {
         Integer insert = moocOrderTMapper.insert(moocOrderT);
         if (insert > 0) {
             // 返回查询结果
-            return null;
+            OrderVO orderVO = moocOrderTMapper.getOrderInfoById(uuid);
+            if (orderVO == null || orderVO.getOrderId() == null) {
+                log.error("订单信息查询失败,订单编号为{}", uuid);
+                return null;
+            } else {
+                return orderVO;
+            }
         } else {
             // 插入出错
             log.error("订单插入失败");
@@ -132,8 +138,18 @@ public class DefaultOrderServiceImpl implements OrderServiceAPI {
     }
 
     @Override
-    public Page<OrderVO> getOrderByUserId(Integer userId, Page<OrderVO> page) {
-        return null;
+    public List<OrderVO> getOrderByUserId(Integer userId) {
+        if (userId == null) {
+            log.error("订单查询业务失败，用户编号未传入");
+            return null;
+        } else {
+            List<OrderVO> ordersByUserId = moocOrderTMapper.getOrdersByUserId(userId);
+            if (ordersByUserId == null && ordersByUserId.size() == 0) {
+                return new ArrayList<>();
+            } else {
+                return ordersByUserId;
+            }
+        }
     }
 
     @Override
