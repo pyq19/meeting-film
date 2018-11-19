@@ -1,5 +1,6 @@
 package com.stylefeng.guns.rest.modular.order.service;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
@@ -23,13 +24,13 @@ import java.util.List;
 
 @Slf4j
 @Component
-@Service(interfaceClass = OrderServiceAPI.class, group = "default")
+@Service(interfaceClass = OrderServiceAPI.class)
 public class DefaultOrderServiceImpl implements OrderServiceAPI {
 
     @Autowired
     private MoocOrderTMapper moocOrderTMapper;
 
-    @Autowired
+    @Reference(interfaceClass = CinemaServiceAPI.class, check = false)
     private CinemaServiceAPI cinemaServiceAPI;
 
     @Autowired
