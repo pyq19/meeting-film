@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.api.cinema.CinemaServiceAPI;
 import com.stylefeng.guns.api.cinema.vo.FilmInfoVO;
 import com.stylefeng.guns.api.cinema.vo.OrderQueryVO;
@@ -139,16 +140,26 @@ public class DefaultOrderServiceImpl implements OrderServiceAPI {
     }
 
     @Override
-    public List<OrderVO> getOrderByUserId(Integer userId) {
+    public Page<OrderVO> getOrderByUserId(Integer userId, Page<OrderVO> page) {
+        Page<OrderVO> result = new Page<>();
         if (userId == null) {
             log.error("订单查询业务失败，用户编号未传入");
             return null;
         } else {
-            List<OrderVO> ordersByUserId = moocOrderTMapper.getOrdersByUserId(userId);
+            List<OrderVO> ordersByUserId = moocOrderTMapper.getOrdersByUserId(userId, page);
             if (ordersByUserId == null && ordersByUserId.size() == 0) {
-                return new ArrayList<>();
+                result.setTotal(0);
+                result.setRecords(new ArrayList<>());
+                return result;
             } else {
-                return ordersByUserId;
+                // 获取订单总数
+                EntityWrapper<MoocOrderT> entityWrapper = new EntityWrapper<>();
+                entityWrapper.eq("order_user", userId);
+                Integer counts = moocOrderTMapper.selectCount(entityWrapper);
+                // 将结果放入Page
+                result.setTotal(counts);
+                result.setRecords(ordersByUserId);
+                return result;
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.stylefeng.guns.rest.modular.order;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.api.order.OrderServiceAPI;
 import com.stylefeng.guns.api.order.vo.OrderVO;
 import com.stylefeng.guns.rest.common.CurrentUser;
@@ -10,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -31,6 +35,9 @@ public class OrderController {
             if (isTrue && isNotSold) {
                 // 创建订单信息,注意获取登陆人
                 String userId = CurrentUser.getCurrentUserId();
+                if (userId == null || userId.trim().length() == 0) {
+                    return ResponseVO.serviceFail("用户未登陆");
+                }
                 OrderVO orderVO = orderServiceAPI.saveOrderInfo(fieldId, soldSeats, seatsName, Integer.parseInt(userId));
                 if (orderVO == null) {
                     log.error("购票未成功");
@@ -54,9 +61,14 @@ public class OrderController {
             @RequestParam(name = "pageSize", required = false, defaultValue = "5") Integer pageSize
     ) {
         // 获取当前登陆人的信息
-
+        String userId = CurrentUser.getCurrentUserId();
         // 使用当前登陆人获取已经购买的订单
-
-        return null;
+        Page<OrderVO> page = new Page<>(nowPage, pageSize);
+        if (userId != null && userId.trim().length() > 0) {
+            Page<OrderVO> result = orderServiceAPI.getOrderByUserId(Integer.parseInt(userId), page);
+            return ResponseVO.success(nowPage, (int) result.getPages(), "", result.getRecords());
+        } else {
+            return ResponseVO.serviceFail("用户未登陆");
+        }
     }
 }

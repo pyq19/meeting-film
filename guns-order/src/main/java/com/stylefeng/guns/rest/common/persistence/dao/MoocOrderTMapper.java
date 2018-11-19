@@ -22,8 +22,8 @@ public interface MoocOrderTMapper extends BaseMapper<MoocOrderT> {
 
     OrderVO getOrderInfoById(@Param("orderId") String orderId);
 
-    List<OrderVO> getOrdersByUserId(@Param("userId") Integer userId);
+    List<OrderVO> getOrdersByUserId(@Param("userId") Integer userId, Page<OrderVO> page);
 
-    String getSoldSeatsByFieldId(@Param("fieldId")Integer fieldId);
+    String getSoldSeatsByFieldId(@Param("fieldId") Integer fieldId);
 
 }
