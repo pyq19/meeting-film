@@ -32,10 +32,10 @@
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.stylefeng</groupId>
-            <artifactId>guns-core</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.stylefeng</groupId>-->
+            <!--<artifactId>guns-core</artifactId>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>com.stylefeng</groupId>
             <artifactId>guns-api</artifactId>
@@ -56,7 +56,6 @@
             <artifactId>zkclient</artifactId>
             <version>0.11</version>
         </dependency>
-
 
     </dependencies>
 

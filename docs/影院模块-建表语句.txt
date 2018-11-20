@@ -91,19 +91,19 @@ CREATE TABLE mooc_hall_dict_t(
 -- Records of mooc_hall_dict_t
 -- ----------------------------
 INSERT INTO mooc_hall_dict_t(UUID,show_name) VALUES(99,'全部');
-INSERT INTO mooc_hall_dict_t(UUID,show_name,seat_address) VALUES(1,'IMAX厅','seats/123214.json');
-INSERT INTO mooc_hall_dict_t(UUID,show_name,seat_address) VALUES(2,'CGS中国巨幕厅','seats/123214.json');
-INSERT INTO mooc_hall_dict_t(UUID,show_name,seat_address) VALUES(3,'杜比全景声厅','seats/123214.json');
-INSERT INTO mooc_hall_dict_t(UUID,show_name,seat_address) VALUES(4,'Dolby Cinema厅','seats/123214.json');
-INSERT INTO mooc_hall_dict_t(UUID,show_name,seat_address) VALUES(5,'RealD厅','seats/123214.json');
-INSERT INTO mooc_hall_dict_t(UUID,show_name,seat_address) VALUES(6,'RealD 6FL厅','seats/123214.json');
-INSERT INTO mooc_hall_dict_t(UUID,show_name,seat_address) VALUES(7,'LUXE巨幕厅','seats/123214.json');
-INSERT INTO mooc_hall_dict_t(UUID,show_name,seat_address) VALUES(8,'4DX厅','seats/123214.json');
-INSERT INTO mooc_hall_dict_t(UUID,show_name,seat_address) VALUES(9,'DTS:X 临境音厅','seats/123214.json');
-INSERT INTO mooc_hall_dict_t(UUID,show_name,seat_address) VALUES(10,'儿童厅','seats/123214.json');
-INSERT INTO mooc_hall_dict_t(UUID,show_name,seat_address) VALUES(11,'4K厅','seats/123214.json');
-INSERT INTO mooc_hall_dict_t(UUID,show_name,seat_address) VALUES(12,'4D厅','seats/123214.json');
-INSERT INTO mooc_hall_dict_t(UUID,show_name,seat_address) VALUES(13,'巨幕厅','seats/123214.json');
+INSERT INTO mooc_hall_dict_t(UUID,show_name,seat_address) VALUES(1,'IMAX厅','/seats/123214.json');
+INSERT INTO mooc_hall_dict_t(UUID,show_name,seat_address) VALUES(2,'CGS中国巨幕厅','/seats/123214.json');
+INSERT INTO mooc_hall_dict_t(UUID,show_name,seat_address) VALUES(3,'杜比全景声厅','/seats/123214.json');
+INSERT INTO mooc_hall_dict_t(UUID,show_name,seat_address) VALUES(4,'Dolby Cinema厅','/seats/123214.json');
+INSERT INTO mooc_hall_dict_t(UUID,show_name,seat_address) VALUES(5,'RealD厅','/seats/123214.json');
+INSERT INTO mooc_hall_dict_t(UUID,show_name,seat_address) VALUES(6,'RealD 6FL厅','/seats/123214.json');
+INSERT INTO mooc_hall_dict_t(UUID,show_name,seat_address) VALUES(7,'LUXE巨幕厅','/seats/123214.json');
+INSERT INTO mooc_hall_dict_t(UUID,show_name,seat_address) VALUES(8,'4DX厅','/seats/123214.json');
+INSERT INTO mooc_hall_dict_t(UUID,show_name,seat_address) VALUES(9,'DTS:X 临境音厅','/seats/123214.json');
+INSERT INTO mooc_hall_dict_t(UUID,show_name,seat_address) VALUES(10,'儿童厅','/seats/123214.json');
+INSERT INTO mooc_hall_dict_t(UUID,show_name,seat_address) VALUES(11,'4K厅','/seats/123214.json');
+INSERT INTO mooc_hall_dict_t(UUID,show_name,seat_address) VALUES(12,'4D厅','/seats/123214.json');
+INSERT INTO mooc_hall_dict_t(UUID,show_name,seat_address) VALUES(13,'巨幕厅','/seats/123214.json');
 
 
 
