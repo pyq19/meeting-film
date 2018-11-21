@@ -42,10 +42,9 @@ public class DefaultOrderServiceImpl implements OrderServiceAPI {
     public boolean isTrueSeats(String fieldId, String seats) {
         // 根据FieldId找到对应的座位位置图
         String seatPath = moocOrderTMapper.getSeatsByFieldId(fieldId);
-        log.info("seatPath: ", seatPath);
+        log.info("-------seatPath: ", seatPath);
         // 读取位置图，判断seats是否为真
         String fileStrByAddress = ftpUtil.getFileStrByAddress(seatPath);
-        log.info("fileStrByAddress: ", fileStrByAddress);
         // 将fileStrByAddress转换为JSON对象
         JSONObject jsonObject = JSONObject.parseObject(fileStrByAddress);
         // seats=1,2,3   ids="1,3,4,5,6,7,88"
