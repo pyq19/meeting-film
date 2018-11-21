@@ -1,0 +1,39 @@
+---
+- name: update meeting-film
+  hosts: impyq
+  user: root
+
+  tasks:
+  - name: copy yml
+    copy:
+      src: "{{ item.src }}"
+      dest: "{{ item.dest }}"
+    with_items:
+    - { src: '{{ playbook_dir }}/../guns-user/src/main/resources/application.yml',    dest: '/opt/meeting-film/backend/guns-user/src/main/resources/application.yml' }
+    - { src: '{{ playbook_dir }}/../guns-order/src/main/resources/application.yml',   dest: '/opt/meeting-film/backend/guns-order/src/main/resources/application.yml' }
+    - { src: '{{ playbook_dir }}/../guns-gateway/src/main/resources/application.yml', dest: '/opt/meeting-film/backend/guns-gateway/src/main/resources/application.yml' }
+    - { src: '{{ playbook_dir }}/../guns-film/src/main/resources/application.yml',    dest: '/opt/meeting-film/backend/guns-film/src/main/resources/application.yml' }
+    - { src: '{{ playbook_dir }}/../guns-cinema/src/main/resources/application.yml',  dest: '/opt/meeting-film/backend/guns-cinema/src/main/resources/application.yml' }
+
+  - name: pull from git
+    git:
+      repo: git@github.com:yenkeia/meeting-film.git
+      dest: /opt/meeting-film/backend
+      update: yes
+      version: master
+
+  - name: maven clean and package
+    shell:
+      chdir: /opt/meeting-film/backend
+      cmd: mvn clean package -Dmaven.test.skip=true
+
+  - name: supervisor restart
+    supervisorctl:
+      name: "{{ item }}"
+      state: restarted
+    with_items:
+      - "guns-cinema"
+      - "guns-film"
+      - "guns-gateway"
+      - "guns-order"
+      - "guns-user"

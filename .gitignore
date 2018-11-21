@@ -35,3 +35,4 @@ application.yml
 *.gz
 .DS_Store
 /jars/
+*.retry
