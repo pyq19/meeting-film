@@ -20,7 +20,7 @@ import java.util.List;
 @RequestMapping(value = "/order/")
 public class OrderController {
 
-    @Reference(interfaceClass = OrderServiceAPI.class, check = false)
+    @Reference(interfaceClass = OrderServiceAPI.class, check = false, timeout = 8000)
     private OrderServiceAPI orderServiceAPI;
 
     // 购票
