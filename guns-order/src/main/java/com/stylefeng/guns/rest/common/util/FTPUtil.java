@@ -30,6 +30,7 @@ public class FTPUtil {
             ftpClient.setControlEncoding("utf-8");
             ftpClient.connect(hostName, port);
             ftpClient.login(userName, password);
+            log.info("---ftp: {}, {}, {}", hostName, port, userName);
         } catch (Exception e) {
             log.error("初始化FTP失败", e);
         }
@@ -38,6 +39,7 @@ public class FTPUtil {
     // 输入一个路径，然后将路径里的文件转换成字符串返回
     public String getFileStrByAddress(String fileAddress) {
         BufferedReader bufferedReader = null;
+        log.info("---ftp: {}", fileAddress);
         try {
             initFTPClient();
             bufferedReader = new BufferedReader(
