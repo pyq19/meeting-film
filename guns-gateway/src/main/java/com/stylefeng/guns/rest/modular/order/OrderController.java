@@ -64,7 +64,6 @@ public class OrderController {
                 // 验证，上述两个内容有一个不为真，则不创建订单信息
                 if (isTrue && isNotSold) {
                     // 创建订单信息,注意获取登陆人
-                    // TODO BUG: 因为 Hystrix 注入了一个线程池导致这个线程池失效
                     String userId = CurrentUser.getCurrentUserId();
                     if (userId == null || userId.trim().length() == 0) {
                         return ResponseVO.serviceFail("用户未登陆");
