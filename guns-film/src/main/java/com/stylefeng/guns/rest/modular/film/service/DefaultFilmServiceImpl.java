@@ -50,7 +50,7 @@ public class DefaultFilmServiceImpl implements FilmServiceAPI {
             bannerVO.setBannerAddress(moocBannerT.getBannerAddress());
             result.add(bannerVO);
         }
-        return null;
+        return result;
     }
 
     private List<FilmInfo> getFilmInfos(List<MoocFilmT> moocFilms) {
