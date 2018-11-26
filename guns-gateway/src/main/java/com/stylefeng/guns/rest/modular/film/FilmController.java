@@ -20,7 +20,7 @@ import java.util.concurrent.Future;
 @RequestMapping("/film/")
 public class FilmController {
 
-    private static final String IMG_PRE = "http://image.impyq.com/";
+    private static final String IMG_PRE = "http://img.impyq.com/";
 
     @Reference(interfaceClass = FilmServiceAPI.class, check = false)
     private FilmServiceAPI filmServiceAPI;

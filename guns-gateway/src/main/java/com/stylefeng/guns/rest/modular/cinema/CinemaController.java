@@ -27,7 +27,7 @@ public class CinemaController {
     @Reference(interfaceClass = OrderServiceAPI.class, check = false)
     private OrderServiceAPI orderServiceAPI;
 
-    public static final String IMG_PRE = "http://image.impyq.com/";
+    public static final String IMG_PRE = "http://img.impyq.com/";
 
     // 查询影院列表
     @RequestMapping(value = "getCinemas")
